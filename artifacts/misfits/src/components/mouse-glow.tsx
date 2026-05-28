@@ -1,56 +1,85 @@
 import { useEffect, useRef } from "react";
 
 export function MouseGlow() {
-  const glowRef = useRef<HTMLDivElement>(null);
-  const pos = useRef({ x: -9999, y: -9999 });
-  const current = useRef({ x: -9999, y: -9999 });
+  const mainRef = useRef<HTMLDivElement>(null);
+  const trailRef = useRef<HTMLDivElement>(null);
+  const pos = useRef({ x: -2000, y: -2000 });
+  const fast = useRef({ x: -2000, y: -2000 });
+  const slow = useRef({ x: -2000, y: -2000 });
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const onMouseMove = (e: MouseEvent) => {
       pos.current = { x: e.clientX, y: e.clientY };
     };
 
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
-    const animate = () => {
-      current.current.x = lerp(current.current.x, pos.current.x, 0.07);
-      current.current.y = lerp(current.current.y, pos.current.y, 0.07);
+    const tick = () => {
+      fast.current.x = lerp(fast.current.x, pos.current.x, 0.12);
+      fast.current.y = lerp(fast.current.y, pos.current.y, 0.12);
+      slow.current.x = lerp(slow.current.x, pos.current.x, 0.045);
+      slow.current.y = lerp(slow.current.y, pos.current.y, 0.045);
 
-      if (glowRef.current) {
-        glowRef.current.style.transform = `translate(${current.current.x}px, ${current.current.y}px) translate(-50%, -50%)`;
+      if (mainRef.current) {
+        mainRef.current.style.left = `${fast.current.x}px`;
+        mainRef.current.style.top = `${fast.current.y}px`;
+      }
+      if (trailRef.current) {
+        trailRef.current.style.left = `${slow.current.x}px`;
+        trailRef.current.style.top = `${slow.current.y}px`;
       }
 
-      rafRef.current = requestAnimationFrame(animate);
+      rafRef.current = requestAnimationFrame(tick);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    rafRef.current = requestAnimationFrame(animate);
+    window.addEventListener("mousemove", onMouseMove);
+    rafRef.current = requestAnimationFrame(tick);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mousemove", onMouseMove);
       cancelAnimationFrame(rafRef.current);
     };
   }, []);
 
   return (
-    <div
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
-      aria-hidden="true"
-    >
+    <>
+      {/* Glow principale — ellisse orizzontale, si muove veloce */}
       <div
-        ref={glowRef}
-        className="absolute top-0 left-0 will-change-transform"
+        ref={mainRef}
+        aria-hidden="true"
         style={{
-          width: "600px",
-          height: "600px",
+          position: "fixed",
+          pointerEvents: "none",
+          zIndex: 9999,
+          width: "800px",
+          height: "320px",
+          transform: "translate(-50%, -50%)",
           background:
-            "radial-gradient(circle at center, rgba(100,180,255,0.13) 0%, rgba(60,140,255,0.08) 30%, rgba(19,55,244,0.04) 60%, transparent 75%)",
-          filter: "blur(30px)",
-          borderRadius: "50%",
+            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(80,170,255,0.55) 0%, rgba(40,110,255,0.28) 35%, rgba(19,55,244,0.10) 65%, transparent 80%)",
+          filter: "blur(45px)",
           mixBlendMode: "screen",
+          willChange: "left, top",
         }}
       />
-    </div>
+      {/* Scia lenta — più ampia, crea la sensazione di inchiostro che si diffonde */}
+      <div
+        ref={trailRef}
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          pointerEvents: "none",
+          zIndex: 9998,
+          width: "1100px",
+          height: "380px",
+          transform: "translate(-50%, -50%)",
+          background:
+            "radial-gradient(ellipse 55% 40% at 50% 50%, rgba(60,140,255,0.30) 0%, rgba(30,80,220,0.12) 45%, transparent 70%)",
+          filter: "blur(70px)",
+          mixBlendMode: "screen",
+          willChange: "left, top",
+        }}
+      />
+    </>
   );
 }
