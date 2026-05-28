@@ -9,6 +9,7 @@ import { Pricing } from "@/components/sections/pricing";
 import { Mission } from "@/components/sections/mission";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { MarqueeStrip } from "@/components/marquee-strip";
 
 export default function Home() {
   return (
@@ -16,8 +17,10 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <MarqueeStrip />
         <Problem />
         <Mission />
+        <MarqueeStrip reverse dim />
         <Features />
         <HowItWorks />
         <SocialProof />

@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import { CustomCursor } from "@/components/custom-cursor";
+import { ScrollProgress } from "@/components/scroll-progress";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <ScrollProgress />
         <CustomCursor />
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
           <Router />
