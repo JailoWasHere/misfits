@@ -6,6 +6,7 @@ import { SocialProof } from "@/components/sections/social-proof";
 import { CommunityPreview } from "@/components/sections/community-preview";
 import { Cta } from "@/components/sections/cta";
 import { Pricing } from "@/components/sections/pricing";
+import { Mission } from "@/components/sections/mission";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 
@@ -16,6 +17,7 @@ export default function Home() {
       <main>
         <Hero />
         <Problem />
+        <Mission />
         <Features />
         <HowItWorks />
         <SocialProof />
