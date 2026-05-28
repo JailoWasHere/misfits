@@ -16,10 +16,10 @@ export function MouseGlow() {
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
     const tick = () => {
-      fast.current.x = lerp(fast.current.x, pos.current.x, 0.12);
-      fast.current.y = lerp(fast.current.y, pos.current.y, 0.12);
-      slow.current.x = lerp(slow.current.x, pos.current.x, 0.045);
-      slow.current.y = lerp(slow.current.y, pos.current.y, 0.045);
+      fast.current.x = lerp(fast.current.x, pos.current.x, 0.1);
+      fast.current.y = lerp(fast.current.y, pos.current.y, 0.1);
+      slow.current.x = lerp(slow.current.x, pos.current.x, 0.038);
+      slow.current.y = lerp(slow.current.y, pos.current.y, 0.038);
 
       if (mainRef.current) {
         mainRef.current.style.left = `${fast.current.x}px`;
@@ -44,7 +44,52 @@ export function MouseGlow() {
 
   return (
     <>
-      {/* Glow principale — ellisse orizzontale, si muove veloce */}
+      {/* SVG filter: turbulence distorce la forma in modo organico/casuale */}
+      <svg
+        aria-hidden="true"
+        style={{ position: "fixed", width: 0, height: 0, overflow: "hidden", zIndex: -1 }}
+      >
+        <defs>
+          <filter id="ink-distort" x="-40%" y="-40%" width="180%" height="180%">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.018 0.022"
+              numOctaves="4"
+              seed="7"
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="140"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="displaced"
+            />
+            <feGaussianBlur in="displaced" stdDeviation="18" />
+          </filter>
+          <filter id="ink-distort-trail" x="-40%" y="-40%" width="180%" height="180%">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.014 0.019"
+              numOctaves="3"
+              seed="13"
+              result="noise2"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise2"
+              scale="180"
+              xChannelSelector="G"
+              yChannelSelector="R"
+              result="displaced2"
+            />
+            <feGaussianBlur in="displaced2" stdDeviation="28" />
+          </filter>
+        </defs>
+      </svg>
+
+      {/* Glow principale — si muove rapido, distorto dal filtro turbolenza */}
       <div
         ref={mainRef}
         aria-hidden="true"
@@ -52,17 +97,18 @@ export function MouseGlow() {
           position: "fixed",
           pointerEvents: "none",
           zIndex: 9999,
-          width: "800px",
-          height: "320px",
+          width: "520px",
+          height: "420px",
           transform: "translate(-50%, -50%)",
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(80,170,255,0.55) 0%, rgba(40,110,255,0.28) 35%, rgba(19,55,244,0.10) 65%, transparent 80%)",
-          filter: "blur(45px)",
+            "radial-gradient(circle at 45% 55%, rgba(80,170,255,0.70) 0%, rgba(40,110,255,0.40) 30%, rgba(19,55,244,0.15) 60%, transparent 80%)",
+          filter: "url(#ink-distort)",
           mixBlendMode: "screen",
           willChange: "left, top",
         }}
       />
-      {/* Scia lenta — più ampia, crea la sensazione di inchiostro che si diffonde */}
+
+      {/* Scia lenta — più grande, distorsione diversa, effetto vapore/inchiostro */}
       <div
         ref={trailRef}
         aria-hidden="true"
@@ -70,12 +116,12 @@ export function MouseGlow() {
           position: "fixed",
           pointerEvents: "none",
           zIndex: 9998,
-          width: "1100px",
-          height: "380px",
+          width: "700px",
+          height: "560px",
           transform: "translate(-50%, -50%)",
           background:
-            "radial-gradient(ellipse 55% 40% at 50% 50%, rgba(60,140,255,0.30) 0%, rgba(30,80,220,0.12) 45%, transparent 70%)",
-          filter: "blur(70px)",
+            "radial-gradient(circle at 55% 45%, rgba(60,150,255,0.45) 0%, rgba(30,90,230,0.20) 40%, transparent 72%)",
+          filter: "url(#ink-distort-trail)",
           mixBlendMode: "screen",
           willChange: "left, top",
         }}
