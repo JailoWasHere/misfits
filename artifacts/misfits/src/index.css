@@ -133,13 +133,14 @@
 @layer base {
   * {
     @apply border-border;
+    cursor: none !important;
   }
 
   body {
     @apply font-sans antialiased bg-background text-foreground overflow-x-hidden;
-    /* Force dark theme bg */
     background-color: hsl(230 40% 4%);
     color: white;
+    cursor: none;
   }
 }
 
