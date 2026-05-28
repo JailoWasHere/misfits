@@ -1,80 +1,148 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { Check, Zap, GraduationCap, Sparkles } from "lucide-react";
+import { useRef } from "react";
+import { Check, Shield, Users, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const plans = [
   {
     id: "free",
-    icon: Zap,
-    name: "Free",
-    tagline: "Inizia adesso",
-    price: { monthly: "0", yearly: "0" },
-    description: "Per chi vuole esplorare e capire cos'è Misfits.",
-    cta: "Inizia gratis",
-    ctaVariant: "outline" as const,
+    icon: Shield,
+    name: "Il Kit di Sopravvivenza",
+    tag: "Free",
+    price: "0€",
+    priceSub: "per sempre",
+    payNote: null,
+    description: "I fondamentali per non annegare nel primo mese da rappresentante.",
+    cta: "Scarica gratis",
     highlight: false,
-    features: [
-      "Accesso a 20 template base",
-      "Guida alla burocrazia (livello 1)",
-      "Accesso in sola lettura alla community",
-      "1 sessione mentor al mese",
-      "Supporto via email",
-    ],
-    missing: [
-      "Template avanzati illimitati",
-      "Mentor dedicato",
-      "Canali community esclusivi",
+    accentColor: "text-blue-400",
+    borderColor: "border-white/10",
+    groups: [
+      {
+        label: "I 3 Moduli Base",
+        features: [
+          "Template PDF: Richiesta Assemblea",
+          "Template PDF: Richiesta Comitato",
+          "Template PDF: Verbale d'istituto",
+          "Linguaggio legale perfetto, pronti da firmare",
+        ],
+      },
+      {
+        label: "Wiki Burocratica (Sola lettura)",
+        features: [
+          "Diritti base dello Statuto degli Studenti",
+          "Cosa fare se il Preside nega l'assemblea",
+          "Guide pratiche ai tuoi diritti",
+        ],
+      },
+      {
+        label: "Canale Telegram Misfits Alert",
+        features: [
+          "News e aggiornamenti ministeriali",
+          "Pillole di leadership scolastica",
+          "Canale di sola lettura",
+        ],
+      },
     ],
   },
   {
     id: "pro",
-    icon: Sparkles,
-    name: "Pro",
-    tagline: "Il più scelto",
-    price: { monthly: "4", yearly: "3" },
-    description: "Per il rappresentante che vuole davvero fare la differenza.",
-    cta: "Inizia gratis 14 giorni",
-    ctaVariant: "default" as const,
+    icon: Users,
+    name: "Il Collettivo",
+    tag: "PRO",
+    price: "29€",
+    priceSub: "una tantum / anno — tutto il team",
+    payNote: "7–10€ a testa tra i 4 eletti. Bonifico istantaneo, zero burocrazia con la scuola.",
+    description: "Per i 4 rappresentanti eletti che vogliono svoltare l'anno senza impazzire.",
+    cta: "Unisciti al Collettivo",
     highlight: true,
-    features: [
-      "Tutti i template (300+)",
-      "Guida completa alla burocrazia",
-      "Community attiva + canali riservati",
-      "Mentor illimitate",
-      "Priorità nelle risposte",
-      "Archivio mandati precedenti",
-      "Badge rappresentante verificato",
+    accentColor: "text-primary",
+    borderColor: "border-primary/50",
+    groups: [
+      {
+        label: "Tutto il piano Free, più:",
+        features: [],
+      },
+      {
+        label: "Cassaforte dei Template Avanzati",
+        features: [
+          "Moduli per Co-gestione e Settimana Alternativa",
+          "Template Tornei e Giornalino d'Istituto",
+          "Contratti per le felpe d'istituto",
+          "Accesso agli atti per il bilancio scolastico",
+        ],
+      },
+      {
+        label: "Il Network Segreto",
+        features: [
+          "Gruppo Telegram nazionale riservato",
+          "Fornitori di felpe economici verificati",
+          "Contatti per le assemblee in tutta Italia",
+          "Supporto tra pari h24",
+        ],
+      },
+      {
+        label: "Mentor su WhatsApp",
+        features: [
+          "Ex rappresentante universitario in chat",
+          "Risposte ai dubbi dell'ultimo minuto",
+          "Revisione richieste prima di protocollare",
+        ],
+      },
     ],
-    missing: [],
   },
   {
-    id: "scuola",
-    icon: GraduationCap,
-    name: "Scuola",
-    tagline: "Per istituti",
-    price: { monthly: "19", yearly: "15" },
-    description: "Per scuole che vogliono supportare tutti i loro rappresentanti.",
-    cta: "Contatta il team",
-    ctaVariant: "outline" as const,
+    id: "fondo",
+    icon: Flame,
+    name: "Il Fondo Comitato",
+    tag: "Su Misura",
+    price: "89€",
+    priceSub: "una tantum / anno scolastico",
+    payNote: "Pagato dal fondo cassa del Comitato Studentesco. La scuola non c'entra — sono i vostri soldi.",
+    description: "Per le scuole grandi dove i rappresentanti gestiscono budget importanti.",
+    cta: "Parliamoci",
     highlight: false,
-    features: [
-      "Pro per tutti i rappresentanti dell'istituto",
-      "Dashboard per il referente scolastico",
-      "Onboarding guidato per i nuovi eletti",
-      "Reportistica e storico mandati",
-      "Supporto dedicato prioritario",
-      "Personalizzazione con logo scuola",
+    accentColor: "text-violet-400",
+    borderColor: "border-violet-500/30",
+    groups: [
+      {
+        label: "Tutto il piano PRO, più:",
+        features: [],
+      },
+      {
+        label: "Misfits Academy (Formazione Live)",
+        features: [
+          "Sessione intensiva 2h su Zoom a novembre",
+          "Public Speaking per rappresentanti",
+          "Gestione del comitato studentesco",
+          "Tecniche di negoziazione con la presidenza",
+        ],
+      },
+      {
+        label: "Linea Prioritaria SOS Mentor",
+        features: [
+          "Chiamate d'urgenza illimitate con il Mentor",
+          "Crisi nera: minacce di sospensione collettiva",
+          "Supporto durante occupazioni e conflitti",
+          "Muri totali della presidenza? Ci siamo noi",
+        ],
+      },
+      {
+        label: "Contatti Fornitori Verificati",
+        features: [
+          "Lista fornitori partner con sconti dedicati",
+          "Felpe, grafica, service audio per assemblee",
+          "Risparmio garantito > costo dell'abbonamento",
+        ],
+      },
     ],
-    missing: [],
   },
 ];
 
 export function Pricing() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [yearly, setYearly] = useState(false);
 
   return (
     <section id="pricing" className="py-24 md:py-32 relative overflow-hidden">
@@ -86,61 +154,27 @@ export function Pricing() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="max-w-3xl mx-auto text-center mb-12"
+          className="max-w-3xl mx-auto text-center mb-16"
         >
           <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-sm text-primary mb-6">
-            Prezzi
+            Piani
           </span>
           <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
-            Semplice.{" "}
+            Scegli il tuo{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-indigo-400">
-              Trasparente.
+              livello
             </span>
           </h2>
-          <p className="text-xl text-white/60 leading-relaxed mb-8">
-            Inizia gratis. Passa a Pro quando sei pronto. Nessun costo nascosto.
+          <p className="text-xl text-white/60 leading-relaxed">
+            Pagato da voi, per voi. Zero burocrazia con la scuola.
           </p>
-
-          {/* Billing toggle */}
-          <div className="inline-flex items-center gap-3 p-1 rounded-full border border-white/10 bg-card/60 backdrop-blur-sm">
-            <button
-              onClick={() => setYearly(false)}
-              className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
-                !yearly ? "bg-primary text-white shadow-lg" : "text-white/50 hover:text-white"
-              }`}
-              data-testid="billing-monthly"
-            >
-              Mensile
-            </button>
-            <button
-              onClick={() => setYearly(true)}
-              className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${
-                yearly ? "bg-primary text-white shadow-lg" : "text-white/50 hover:text-white"
-              }`}
-              data-testid="billing-yearly"
-            >
-              Annuale
-              <span className="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full px-2 py-0.5">
-                −25%
-              </span>
-            </button>
-          </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-start">
           {plans.map((plan, i) => (
-            <PricingCard key={plan.id} plan={plan} yearly={yearly} index={i} isInView={isInView} />
+            <PricingCard key={plan.id} plan={plan} index={i} isInView={isInView} />
           ))}
         </div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.6 }}
-          className="text-center text-white/30 text-sm mt-10"
-        >
-          Tutti i piani includono SSL, aggiornamenti automatici e backup. Disdici quando vuoi.
-        </motion.p>
       </div>
     </section>
   );
@@ -148,100 +182,92 @@ export function Pricing() {
 
 function PricingCard({
   plan,
-  yearly,
   index,
   isInView,
 }: {
   plan: (typeof plans)[0];
-  yearly: boolean;
   index: number;
   isInView: boolean;
 }) {
   const Icon = plan.icon;
-  const price = yearly ? plan.price.yearly : plan.price.monthly;
-  const isScuola = plan.id === "scuola";
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay: index * 0.1 }}
-      className={`relative rounded-3xl border p-7 flex flex-col gap-6 transition-all duration-300 ${
+      transition={{ duration: 0.55, delay: index * 0.12 }}
+      className={`relative rounded-3xl border p-7 flex flex-col gap-5 transition-all duration-300 ${plan.borderColor} ${
         plan.highlight
-          ? "border-primary/60 bg-primary/8 shadow-[0_0_60px_-15px_rgba(19,55,244,0.5)] scale-[1.03]"
-          : "border-white/10 bg-card/60 hover:border-white/20"
+          ? "bg-primary/8 shadow-[0_0_60px_-15px_rgba(19,55,244,0.5)]"
+          : "bg-card/60 hover:bg-card/80"
       }`}
       data-testid={`pricing-card-${plan.id}`}
     >
       {plan.highlight && (
         <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-          <span className="bg-primary text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg shadow-primary/30">
-            Più popolare
+          <span className="bg-primary text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg shadow-primary/30 whitespace-nowrap">
+            Più scelto
           </span>
         </div>
       )}
 
+      {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-4">
-          <div
-            className={`p-2.5 rounded-xl ${
-              plan.highlight ? "bg-primary/25" : "bg-white/8"
-            }`}
-          >
-            <Icon className={`h-5 w-5 ${plan.highlight ? "text-primary" : "text-white/60"}`} />
+          <div className={`p-2.5 rounded-xl ${plan.highlight ? "bg-primary/20" : "bg-white/8"}`}>
+            <Icon className={`h-5 w-5 ${plan.accentColor}`} />
           </div>
           <div>
-            <div className="font-black text-white text-lg leading-none">{plan.name}</div>
-            <div className="text-xs text-white/40 mt-0.5">{plan.tagline}</div>
+            <span className={`text-xs font-bold uppercase tracking-widest ${plan.accentColor}`}>
+              {plan.tag}
+            </span>
+            <div className="font-black text-white text-lg leading-tight">{plan.name}</div>
           </div>
         </div>
 
-        <div className="flex items-end gap-1 mb-1">
-          {isScuola ? (
-            <span className="text-4xl font-black text-white">Su misura</span>
-          ) : (
-            <>
-              <span className="text-4xl font-black text-white">
-                €{price}
-              </span>
-              <span className="text-white/40 text-sm mb-1.5">/mese</span>
-            </>
-          )}
+        <div className="mb-3">
+          <span className="text-4xl font-black text-white">{plan.price}</span>
+          <span className="text-white/40 text-sm ml-2">{plan.priceSub}</span>
         </div>
-        {yearly && !isScuola && price !== "0" && (
-          <p className="text-xs text-emerald-400">Fatturato annualmente</p>
+
+        {plan.payNote && (
+          <p className="text-xs text-white/45 leading-relaxed p-3 rounded-xl bg-white/4 border border-white/8 mb-3">
+            {plan.payNote}
+          </p>
         )}
-        <p className="text-sm text-white/55 mt-2 leading-relaxed">{plan.description}</p>
+
+        <p className="text-sm text-white/60 leading-relaxed">{plan.description}</p>
       </div>
 
+      {/* CTA */}
       <Button
         className={`w-full rounded-xl h-11 font-semibold transition-all ${
           plan.highlight
             ? "bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/25"
-            : "border-white/15 text-white hover:bg-white/8 hover:text-white bg-transparent border"
+            : "bg-transparent border border-white/15 text-white hover:bg-white/8"
         }`}
         data-testid={`pricing-cta-${plan.id}`}
       >
         {plan.cta}
       </Button>
 
-      <div className="space-y-2.5">
-        {plan.features.map((f) => (
-          <div key={f} className="flex items-start gap-2.5 text-sm">
-            <Check
-              className={`h-4 w-4 mt-0.5 flex-shrink-0 ${
-                plan.highlight ? "text-primary" : "text-white/50"
-              }`}
-            />
-            <span className="text-white/75">{f}</span>
-          </div>
-        ))}
-        {plan.missing.map((f) => (
-          <div key={f} className="flex items-start gap-2.5 text-sm opacity-35">
-            <div className="h-4 w-4 mt-0.5 flex-shrink-0 flex items-center justify-center">
-              <div className="h-px w-3 bg-white/40 rounded-full" />
-            </div>
-            <span className="text-white/50 line-through">{f}</span>
+      {/* Feature groups */}
+      <div className="space-y-5 pt-1">
+        {plan.groups.map((group) => (
+          <div key={group.label}>
+            <p className={`text-xs font-bold uppercase tracking-widest mb-2.5 ${plan.accentColor} opacity-80`}>
+              {group.label}
+            </p>
+            {group.features.length > 0 && (
+              <ul className="space-y-2">
+                {group.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2.5 text-sm">
+                    <Check className={`h-4 w-4 mt-0.5 flex-shrink-0 ${plan.accentColor}`} />
+                    <span className="text-white/75">{f}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         ))}
       </div>
