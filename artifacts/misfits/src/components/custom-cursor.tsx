@@ -5,8 +5,6 @@ export function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const mouse = useRef({ x: -2000, y: -2000 });
-  const ring = useRef({ x: -2000, y: -2000 });
-  const glow = useRef({ x: -2000, y: -2000 });
   const rafRef = useRef<number>(0);
   const [pressed, setPressed] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -31,18 +29,13 @@ export function CustomCursor() {
     };
 
     const tick = () => {
-      ring.current.x += (mouse.current.x - ring.current.x) * 0.12;
-      ring.current.y += (mouse.current.y - ring.current.y) * 0.12;
-      glow.current.x += (mouse.current.x - glow.current.x) * 0.055;
-      glow.current.y += (mouse.current.y - glow.current.y) * 0.055;
-
       if (ringRef.current) {
-        ringRef.current.style.left = `${ring.current.x - 18}px`;
-        ringRef.current.style.top = `${ring.current.y - 18}px`;
+        ringRef.current.style.left = `${mouse.current.x - 18}px`;
+        ringRef.current.style.top = `${mouse.current.y - 18}px`;
       }
       if (glowRef.current) {
-        glowRef.current.style.left = `${glow.current.x}px`;
-        glowRef.current.style.top = `${glow.current.y}px`;
+        glowRef.current.style.left = `${mouse.current.x}px`;
+        glowRef.current.style.top = `${mouse.current.y}px`;
       }
 
       rafRef.current = requestAnimationFrame(tick);
