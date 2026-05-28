@@ -5,6 +5,7 @@ import { HowItWorks } from "@/components/sections/how-it-works";
 import { SocialProof } from "@/components/sections/social-proof";
 import { CommunityPreview } from "@/components/sections/community-preview";
 import { Cta } from "@/components/sections/cta";
+import { Pricing } from "@/components/sections/pricing";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 
@@ -19,6 +20,7 @@ export default function Home() {
         <HowItWorks />
         <SocialProof />
         <CommunityPreview />
+        <Pricing />
         <Cta />
       </main>
       <Footer />
