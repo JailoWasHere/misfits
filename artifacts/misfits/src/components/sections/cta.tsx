@@ -21,7 +21,11 @@ export function Cta() {
           <motion.div
             initial={{ scale: 0.85, opacity: 0 }}
             animate={isInView ? { scale: 1, opacity: 1 } : {}}
-            transition={{ delay: 0.05, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              delay: 0.05,
+              duration: 0.5,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm text-primary mb-8"
           >
             <Sparkles className="h-4 w-4 mr-2" />
@@ -31,11 +35,16 @@ export function Cta() {
           <h2 className="text-4xl md:text-7xl font-black text-white mb-8 tracking-tight leading-tight">
             <RevealText className="text-white">Il tuo predecessore</RevealText>{" "}
             <br className="hidden md:block" />
-            <RevealText delay={0.3} className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-indigo-300">
-              non ti ha lasciato nulla.
+            <RevealText
+              delay={0.3}
+              className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-indigo-300"
+            >
+              non ti ha lasciato nulla?
             </RevealText>
             <br />
-            <RevealText delay={0.55} className="text-white">Tu lascia qualcosa.</RevealText>
+            <RevealText delay={1.0} className="text-white">
+              Siamo qui per cambiare le cose.
+            </RevealText>
           </h2>
 
           <motion.p
@@ -44,8 +53,8 @@ export function Cta() {
             transition={{ delay: 0.5, duration: 0.6 }}
             className="text-xl md:text-2xl text-white/60 mb-12 leading-relaxed max-w-2xl mx-auto"
           >
-            Unisciti a 12.000 rappresentanti che hanno scelto di fare la differenza.
-            Il tuo mandato inizia adesso.
+            Unisciti a 12.000 rappresentanti che hanno scelto di fare la
+            differenza. Il tuo mandato inizia adesso.
           </motion.p>
 
           <motion.div
@@ -62,25 +71,30 @@ export function Cta() {
               Inizia gratis
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <p className="text-white/40 text-sm">Nessuna carta di credito. Nessun obbligo.</p>
+            <p className="text-white/40 text-sm">
+              Nessuna carta di credito. Nessun obbligo.
+            </p>
           </motion.div>
 
           {/* Staggered trust badges */}
           <div className="flex items-center justify-center gap-8 mt-16 flex-wrap">
-            {["500+ scuole", "12.000+ rappresentanti", "300+ template", "Gratis per sempre"].map(
-              (badge, i) => (
-                <motion.div
-                  key={badge}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.8 + i * 0.07, duration: 0.4 }}
-                  className="flex items-center gap-2 text-white/40 text-sm"
-                >
-                  <span className="h-1 w-1 rounded-full bg-primary" />
-                  {badge}
-                </motion.div>
-              )
-            )}
+            {[
+              "500+ scuole",
+              "12.000+ rappresentanti",
+              "300+ template",
+              "Gratis per sempre",
+            ].map((badge, i) => (
+              <motion.div
+                key={badge}
+                initial={{ opacity: 0, y: 10 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.8 + i * 0.07, duration: 0.4 }}
+                className="flex items-center gap-2 text-white/40 text-sm"
+              >
+                <span className="h-1 w-1 rounded-full bg-primary" />
+                {badge}
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
