@@ -30,6 +30,7 @@ const features = [
     title: "Mentor ex-rappresentanti",
     desc: "Connettiti con chi ci è già passato. Ex rappresentanti che ti guidano, rispondono alle tue domande e ti aiutano a navigare le situazioni difficili.",
     items: ["Sessioni 1:1", "Risposte in 24 ore", "Network di alumni", "Casi reali risolti"],
+    comingSoon: true,
   },
   {
     icon: Network,
@@ -43,10 +44,10 @@ const features = [
 ];
 
 function TiltCard({
-  icon: Icon, color, glow, tag, title, desc, items, index,
+  icon: Icon, color, glow, tag, title, desc, items, index, comingSoon,
 }: {
   icon: React.ElementType; color: string; glow: string; tag: string;
-  title: string; desc: string; items: string[]; index: number;
+  title: string; desc: string; items: string[]; index: number; comingSoon?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -76,28 +77,39 @@ function TiltCard({
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => { setHovering(false); setTilt({ x: 0, y: 0 }); }}
         animate={{
-          rotateX: tilt.x,
-          rotateY: tilt.y,
-          scale: hovering ? 1.025 : 1,
-          boxShadow: hovering ? `0 30px 60px -10px ${glow}` : "0 0 0 0 transparent",
+          rotateX: comingSoon ? 0 : tilt.x,
+          rotateY: comingSoon ? 0 : tilt.y,
+          scale: !comingSoon && hovering ? 1.025 : 1,
+          boxShadow: !comingSoon && hovering ? `0 30px 60px -10px ${glow}` : "0 0 0 0 transparent",
         }}
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
         style={{ transformStyle: "preserve-3d", perspective: "800px" }}
-        className="relative p-7 rounded-3xl border border-white/10 bg-card cursor-default overflow-hidden h-full"
+        className={`relative p-7 rounded-3xl border bg-card cursor-default overflow-hidden h-full ${
+          comingSoon ? "border-white/6 opacity-60 grayscale" : "border-white/10"
+        }`}
       >
         {/* Hover glow blob */}
-        <motion.div
-          className="absolute top-0 right-0 w-48 h-48 rounded-full pointer-events-none"
-          animate={{ opacity: hovering ? 0.12 : 0 }}
-          style={{ background: `radial-gradient(circle, ${glow} 0%, transparent 70%)` }}
-        />
+        {!comingSoon && (
+          <motion.div
+            className="absolute top-0 right-0 w-48 h-48 rounded-full pointer-events-none"
+            animate={{ opacity: hovering ? 0.12 : 0 }}
+            style={{ background: `radial-gradient(circle, ${glow} 0%, transparent 70%)` }}
+          />
+        )}
 
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-5">
             <div className={`p-3 rounded-2xl bg-gradient-to-br ${color} shadow-lg`}>
               <Icon className="h-6 w-6 text-white" />
             </div>
-            <span className="text-xs font-bold uppercase tracking-widest text-white/40">{tag}</span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold uppercase tracking-widest text-white/40">{tag}</span>
+              {comingSoon && (
+                <span className="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-white/10 text-white/50 border border-white/10">
+                  Coming soon
+                </span>
+              )}
+            </div>
           </div>
           <h3 className="text-2xl font-black text-white mb-3">{title}</h3>
           <p className="text-white/60 mb-6 leading-relaxed">{desc}</p>
