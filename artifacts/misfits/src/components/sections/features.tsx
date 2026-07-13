@@ -10,7 +10,7 @@ const features = [
     glow: "rgba(19,55,244,0.3)",
     tag: "Template",
     title: "Template pronti all'uso",
-    desc: "Oltre 300 template per ogni situazione: richiesta assemblee, comunicazioni alla presidenza, verbali, ricorsi. Copia, personalizza, invia.",
+    desc: "Precompilati e consigli per ogni situazione: richiesta assemblee, comunicazioni alla presidenza, verbali, ricorsi. Copia, personalizza, invia.",
     items: ["Assemblea di istituto", "Richieste alla presidenza", "Verbali e comunicati", "Ricorsi e istanze"],
   },
   {

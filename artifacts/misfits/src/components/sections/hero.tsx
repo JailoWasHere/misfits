@@ -47,10 +47,7 @@ export function Hero() {
           <p className="text-xl md:text-2xl text-white/70 mb-10 max-w-2xl mx-auto leading-relaxed">
             Template, guide, mentor e una community. Tutto quello che i tuoi
             predecessori non ti hanno lasciato. Misfits è la prima community
-            italiana di rappresentanti d'istituto. (Nota: non cancellare ma
-            metti un opaco grigio "coming soon su tutte le feature che ancora
-            non ci sono, e lascia invece l'MVP come community e docs gratis.
-            Basta così inizialmente. Sbrigati a metterlo su linkedin.")
+            italiana di rappresentanti d'istituto. 
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

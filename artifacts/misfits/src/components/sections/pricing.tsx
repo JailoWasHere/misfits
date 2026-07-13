@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Check, Shield, Users, Flame } from "lucide-react";
+import { Check, Shield, Users, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const plans = [
@@ -18,6 +18,7 @@ const plans = [
     highlight: false,
     accentColor: "text-blue-400",
     borderColor: "border-white/10",
+    comingSoon: false,
     groups: [
       {
         label: "I 3 Moduli Base",
@@ -51,92 +52,16 @@ const plans = [
     icon: Users,
     name: "Il Collettivo",
     tag: "PRO",
-    price: "29€",
-    priceSub: "una tantum / anno — tutto il team",
-    payNote: "7–10€ a testa tra i 4 eletti. Bonifico istantaneo, zero burocrazia con la scuola.",
-    description: "Per i 4 rappresentanti eletti che vogliono svoltare l'anno senza impazzire.",
-    cta: "Unisciti al Collettivo",
+    price: "???",
+    priceSub: "",
+    payNote: null,
+    description: "",
+    cta: "Disponibile presto",
     highlight: true,
     accentColor: "text-primary",
-    borderColor: "border-primary/50",
-    groups: [
-      {
-        label: "Tutto il piano Free, più:",
-        features: [],
-      },
-      {
-        label: "Cassaforte dei Template Avanzati",
-        features: [
-          "Moduli per Co-gestione e Settimana Alternativa",
-          "Template Tornei e Giornalino d'Istituto",
-          "Contratti per le felpe d'istituto",
-          "Accesso agli atti per il bilancio scolastico",
-        ],
-      },
-      {
-        label: "Il Network Segreto",
-        features: [
-          "Gruppo Telegram nazionale riservato",
-          "Fornitori di felpe economici verificati",
-          "Contatti per le assemblee in tutta Italia",
-          "Supporto tra pari h24",
-        ],
-      },
-      {
-        label: "Mentor su WhatsApp",
-        features: [
-          "Ex rappresentante universitario in chat",
-          "Risposte ai dubbi dell'ultimo minuto",
-          "Revisione richieste prima di protocollare",
-        ],
-      },
-    ],
-  },
-  {
-    id: "fondo",
-    icon: Flame,
-    name: "Il Fondo Comitato",
-    tag: "Su Misura",
-    price: "89€",
-    priceSub: "una tantum / anno scolastico",
-    payNote: "Pagato dal fondo cassa del Comitato Studentesco. La scuola non c'entra — sono i vostri soldi.",
-    description: "Per le scuole grandi dove i rappresentanti gestiscono budget importanti.",
-    cta: "Parliamoci",
-    highlight: false,
-    accentColor: "text-violet-400",
-    borderColor: "border-violet-500/30",
-    groups: [
-      {
-        label: "Tutto il piano PRO, più:",
-        features: [],
-      },
-      {
-        label: "Misfits Academy (Formazione Live)",
-        features: [
-          "Sessione intensiva 2h su Zoom a novembre",
-          "Public Speaking per rappresentanti",
-          "Gestione del comitato studentesco",
-          "Tecniche di negoziazione con la presidenza",
-        ],
-      },
-      {
-        label: "Linea Prioritaria SOS Mentor",
-        features: [
-          "Chiamate d'urgenza illimitate con il Mentor",
-          "Crisi nera: minacce di sospensione collettiva",
-          "Supporto durante occupazioni e conflitti",
-          "Muri totali della presidenza? Ci siamo noi",
-        ],
-      },
-      {
-        label: "Contatti Fornitori Verificati",
-        features: [
-          "Lista fornitori partner con sconti dedicati",
-          "Felpe, grafica, service audio per assemblee",
-          "Risparmio garantito > costo dell'abbonamento",
-        ],
-      },
-    ],
+    borderColor: "border-primary/30",
+    comingSoon: true,
+    groups: [],
   },
 ];
 
@@ -170,7 +95,7 @@ export function Pricing() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto items-start">
           {plans.map((plan, i) => (
             <PricingCard key={plan.id} plan={plan} index={i} isInView={isInView} />
           ))}
@@ -191,30 +116,55 @@ function PricingCard({
 }) {
   const Icon = plan.icon;
 
+  if (plan.comingSoon) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.55, delay: index * 0.12 }}
+        className={`relative rounded-3xl border p-7 flex flex-col items-center justify-center gap-5 min-h-[320px] opacity-50 grayscale ${plan.borderColor} bg-card/60`}
+      >
+        <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+          <span className="bg-white/10 text-white/60 text-xs font-bold px-4 py-1 rounded-full border border-white/15 whitespace-nowrap">
+            Coming soon
+          </span>
+        </div>
+
+        <div className="flex flex-col items-center gap-4 text-center">
+          <div className="p-4 rounded-2xl bg-white/6">
+            <Clock className="h-8 w-8 text-white/30" />
+          </div>
+          <div>
+            <span className="text-xs font-bold uppercase tracking-widest text-white/30 block mb-1">{plan.tag}</span>
+            <div className="font-black text-white/40 text-2xl">{plan.name}</div>
+          </div>
+          <p className="text-white/30 text-sm max-w-[200px]">
+            In arrivo. Tieniti pronto.
+          </p>
+        </div>
+
+        <Button
+          disabled
+          className="w-full rounded-xl h-11 font-semibold bg-transparent border border-white/10 text-white/30 cursor-not-allowed"
+        >
+          {plan.cta}
+        </Button>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, delay: index * 0.12 }}
-      className={`relative rounded-3xl border p-7 flex flex-col gap-5 transition-all duration-300 ${plan.borderColor} ${
-        plan.highlight
-          ? "bg-primary/8 shadow-[0_0_60px_-15px_rgba(19,55,244,0.5)]"
-          : "bg-card/60 hover:bg-card/80"
-      }`}
+      className={`relative rounded-3xl border p-7 flex flex-col gap-5 transition-all duration-300 ${plan.borderColor} bg-card/60 hover:bg-card/80`}
       data-testid={`pricing-card-${plan.id}`}
     >
-      {plan.highlight && (
-        <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-          <span className="bg-primary text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg shadow-primary/30 whitespace-nowrap">
-            Più scelto
-          </span>
-        </div>
-      )}
-
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-4">
-          <div className={`p-2.5 rounded-xl ${plan.highlight ? "bg-primary/20" : "bg-white/8"}`}>
+          <div className="p-2.5 rounded-xl bg-white/8">
             <Icon className={`h-5 w-5 ${plan.accentColor}`} />
           </div>
           <div>
@@ -227,7 +177,9 @@ function PricingCard({
 
         <div className="mb-3">
           <span className="text-4xl font-black text-white">{plan.price}</span>
-          <span className="text-white/40 text-sm ml-2">{plan.priceSub}</span>
+          {plan.priceSub && (
+            <span className="text-white/40 text-sm ml-2">{plan.priceSub}</span>
+          )}
         </div>
 
         {plan.payNote && (
@@ -236,16 +188,14 @@ function PricingCard({
           </p>
         )}
 
-        <p className="text-sm text-white/60 leading-relaxed">{plan.description}</p>
+        {plan.description && (
+          <p className="text-sm text-white/60 leading-relaxed">{plan.description}</p>
+        )}
       </div>
 
       {/* CTA */}
       <Button
-        className={`w-full rounded-xl h-11 font-semibold transition-all ${
-          plan.highlight
-            ? "bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/25"
-            : "bg-transparent border border-white/15 text-white hover:bg-white/8"
-        }`}
+        className="w-full rounded-xl h-11 font-semibold bg-transparent border border-white/15 text-white hover:bg-white/8 transition-all"
         data-testid={`pricing-cta-${plan.id}`}
       >
         {plan.cta}
