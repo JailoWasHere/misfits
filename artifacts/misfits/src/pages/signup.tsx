@@ -100,18 +100,15 @@ export default function SignupPage() {
         <div className="relative z-10 space-y-8">
           <div>
             <h2 className="text-4xl xl:text-5xl font-black text-white leading-tight tracking-tight mb-4">
-              Diventa un{" "}
+              Il mandato inizia{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-indigo-400">
-                Misfit.
+                adesso.
               </span>
             </h2>
             <p className="text-white/50 leading-relaxed text-lg max-w-xs">
-Sii il miglior rappresentante possibile.  </p>
-              <p className="text-white/50 leading-relaxed text-lg max-w-xs">
-                Il cambiamento parte da te            </p>
+              Tutto quello che i tuoi predecessori non ti hanno lasciato. Da oggi è tuo.
+            </p>
           </div>
-          
-                    
 
           <ul className="space-y-3">
             {perks.map((perk, i) => (
