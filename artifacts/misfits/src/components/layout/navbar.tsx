@@ -1,21 +1,27 @@
 import { useState, useEffect } from "react";
-import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 import logoPath from "@assets/immagine_1779966467564.png";
 import { motion, AnimatePresence } from "framer-motion";
 
+const navLinks = [
+  { label: "Il Problema", href: "#problem" },
+  { label: "Funzionalità", href: "#features" },
+  { label: "Community", href: "#community" },
+];
+
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [location] = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const isHome = location === "/" || location === "";
 
   return (
     <header
@@ -26,30 +32,47 @@ export function Navbar() {
       }`}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+        {/* Logo */}
         <Link href="/" className="flex items-center gap-2 z-50">
           <img src={logoPath} alt="Misfits Logo" className="h-8 md:h-10" />
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          <Link href="#problem" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Il Problema</Link>
-          <Link href="#features" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Funzionalità</Link>
-          <Link href="#community" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Community</Link>
-        </nav>
+        {/* Desktop Nav — only on home */}
+        {isHome && (
+          <nav className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-white/70 hover:text-white transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        )}
 
-        <div className="hidden md:flex items-center gap-4">
-          <Button variant="ghost" className="text-white hover:bg-white/10 hover:text-white">
+        {/* Desktop buttons */}
+        <div className="hidden md:flex items-center gap-3">
+          <Link
+            href="/login"
+            className="text-sm font-semibold text-white/70 hover:text-white transition-colors px-4 py-2 rounded-full hover:bg-white/8"
+          >
             Accedi
-          </Button>
-          <Button className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20">
+          </Link>
+          <Link
+            href="/signup"
+            className="text-sm font-semibold text-white bg-primary hover:bg-primary/90 px-4 py-2 rounded-full shadow-lg shadow-primary/20 transition-all hover:shadow-primary/30"
+          >
             Inizia gratis
-          </Button>
+          </Link>
         </div>
 
-        {/* Mobile Toggle */}
-        <button 
+        {/* Mobile toggle */}
+        <button
           className="md:hidden z-50 text-white p-2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
         >
           {mobileMenuOpen ? <X /> : <Menu />}
         </button>
@@ -59,19 +82,41 @@ export function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.22 }}
             className="absolute top-full left-0 w-full bg-background border-b border-white/10 py-6 px-4 flex flex-col gap-6 md:hidden shadow-2xl"
           >
-            <nav className="flex flex-col gap-4 text-center">
-              <Link href="#problem" className="text-lg font-medium text-white/80 hover:text-white" onClick={() => setMobileMenuOpen(false)}>Il Problema</Link>
-              <Link href="#features" className="text-lg font-medium text-white/80 hover:text-white" onClick={() => setMobileMenuOpen(false)}>Funzionalità</Link>
-              <Link href="#community" className="text-lg font-medium text-white/80 hover:text-white" onClick={() => setMobileMenuOpen(false)}>Community</Link>
-            </nav>
+            {isHome && (
+              <nav className="flex flex-col gap-4 text-center">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-lg font-medium text-white/80 hover:text-white transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+            )}
             <div className="flex flex-col gap-3 pt-4 border-t border-white/10">
-              <Button variant="ghost" className="w-full text-white justify-center">Accedi</Button>
-              <Button className="w-full bg-primary text-primary-foreground">Inizia gratis</Button>
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-center text-white/80 hover:text-white font-semibold py-3 rounded-xl border border-white/10 hover:bg-white/6 transition-all"
+              >
+                Accedi
+              </Link>
+              <Link
+                href="/signup"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-center font-semibold text-white bg-primary hover:bg-primary/90 py-3 rounded-xl transition-all shadow-lg shadow-primary/20"
+              >
+                Inizia gratis
+              </Link>
             </div>
           </motion.div>
         )}

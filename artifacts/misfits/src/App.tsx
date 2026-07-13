@@ -6,6 +6,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import IlProblema from "@/pages/il-problema";
 import LoginPage from "@/pages/login";
+import SignupPage from "@/pages/signup";
 import { CustomCursor } from "@/components/custom-cursor";
 import { ScrollProgress } from "@/components/scroll-progress";
 
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/il-problema" component={IlProblema} />
       <Route path="/login" component={LoginPage} />
+      <Route path="/signup" component={SignupPage} />
       <Route component={NotFound} />
     </Switch>
   );
