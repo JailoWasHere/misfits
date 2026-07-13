@@ -2,7 +2,7 @@ import { Hero } from "@/components/sections/hero";
 import { Problem } from "@/components/sections/problem";
 import { Features } from "@/components/sections/features";
 import { HowItWorks } from "@/components/sections/how-it-works";
-import { SocialProof } from "@/components/sections/social-proof";
+/* import { SocialProof } from "@/components/sections/social-proof";*/
 import { CommunityPreview } from "@/components/sections/community-preview";
 import { Cta } from "@/components/sections/cta";
 import { Pricing } from "@/components/sections/pricing";
@@ -23,7 +23,7 @@ export default function Home() {
         <MarqueeStrip reverse dim />
         <Features />
         <HowItWorks />
-        <SocialProof />
+        { /* <SocialProof /> */}
         <CommunityPreview />
         <Pricing />
         <Cta />

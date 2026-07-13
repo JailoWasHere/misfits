@@ -44,7 +44,7 @@ export function Cta() {
             transition={{ delay: 0.5, duration: 0.6 }}
             className="text-xl md:text-2xl text-white/60 mb-12 leading-relaxed max-w-2xl mx-auto"
           >
-            Unisciti a 12.000 rappresentanti che hanno scelto di fare la differenza.
+            Fai parte dei primi rappresentanti che hanno scelto di fare la differenza.
             Il tuo mandato inizia adesso.
           </motion.p>
 

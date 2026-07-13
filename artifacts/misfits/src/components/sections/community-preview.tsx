@@ -75,7 +75,7 @@ export function CommunityPreview() {
             </span>
           </h2>
           <p className="text-xl text-white/60 leading-relaxed">
-            Una rete attiva di oltre 12.000 rappresentanti da tutta Italia. Sempre qualcuno
+            La prima rete attiva di rappresentanti da tutta Italia. Sempre qualcuno
             online, sempre qualcuno che ha già affrontato il tuo stesso problema.
           </p>
         </motion.div>
