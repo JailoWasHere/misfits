@@ -1,13 +1,27 @@
 import { useEffect, useRef, useState } from "react";
+import { useCursor } from "@/contexts/cursor-context";
 
 export function CustomCursor() {
+  const { enabled } = useCursor();
   const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const mouse = useRef({ x: -2000, y: -2000 });
   const rafRef = useRef<number>(0);
   const [pressed, setPressed] = useState(false);
   const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    if (enabled) {
+      document.documentElement.setAttribute("data-custom-cursor", "");
+    } else {
+      document.documentElement.removeAttribute("data-custom-cursor");
+    }
+  }, [enabled]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-custom-cursor", "");
+    return () => document.documentElement.removeAttribute("data-custom-cursor");
+  }, []);
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
@@ -17,27 +31,19 @@ export function CustomCursor() {
         dotRef.current.style.top = `${e.clientY - 6}px`;
       }
     };
-
     const onDown = () => setPressed(true);
     const onUp = () => setPressed(false);
-
     const onEnter = (e: MouseEvent) => {
       if ((e.target as Element).closest("a, button, [data-cursor-hover]")) setHovered(true);
     };
     const onLeave = (e: MouseEvent) => {
       if ((e.target as Element).closest("a, button, [data-cursor-hover]")) setHovered(false);
     };
-
     const tick = () => {
-      if (ringRef.current) {
-        ringRef.current.style.left = `${mouse.current.x - 18}px`;
-        ringRef.current.style.top = `${mouse.current.y - 18}px`;
-      }
       if (glowRef.current) {
         glowRef.current.style.left = `${mouse.current.x}px`;
         glowRef.current.style.top = `${mouse.current.y}px`;
       }
-
       rafRef.current = requestAnimationFrame(tick);
     };
 
@@ -59,11 +65,9 @@ export function CustomCursor() {
   }, []);
 
   const dotScale = pressed ? "scale(0.6)" : hovered ? "scale(2.2)" : "scale(1)";
-  const ringScale = pressed ? "scale(0.8)" : hovered ? "scale(1.5)" : "scale(1)";
 
   return (
     <>
-      {/* Filtro SVG turbulenza — deforma il bagliore in forma organica */}
       <svg aria-hidden="true" style={{ position: "fixed", width: 0, height: 0, overflow: "hidden" }}>
         <defs>
           <filter id="cursor-ink" x="-50%" y="-50%" width="200%" height="200%">
@@ -74,7 +78,7 @@ export function CustomCursor() {
         </defs>
       </svg>
 
-      {/* Bagliore senza forma — lerp lento, distorto dal filtro turbulenza */}
+      {/* Bagliore organico — sempre visibile indipendentemente dal toggle */}
       <div
         ref={glowRef}
         aria-hidden="true"
@@ -90,49 +94,34 @@ export function CustomCursor() {
           filter: "url(#cursor-ink)",
           mixBlendMode: "screen",
           willChange: "left, top",
+          opacity: 1,
+          transition: "opacity 0.4s ease",
         }}
       />
 
-      {/* Punto azzurrino */}
-      <div
-        ref={dotRef}
-        aria-hidden="true"
-        style={{
-          position: "fixed",
-          width: "12px",
-          height: "12px",
-          borderRadius: "50%",
-          background: hovered ? "#a5e8ff" : "#7dcfff",
-          top: 0,
-          left: 0,
-          pointerEvents: "none",
-          zIndex: 99999,
-          transform: dotScale,
-          transition: "transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease",
-          boxShadow: hovered
-            ? "0 0 14px 4px rgba(160,230,255,0.6)"
-            : "0 0 8px 2px rgba(125,207,255,0.45)",
-        }}
-      />
-
-      {/* Ring */}
-      <div
-        ref={ringRef}
-        aria-hidden="true"
-        style={{
-          position: "fixed",
-          width: "36px",
-          height: "36px",
-          border: hovered ? "1.5px solid rgba(160,230,255,0.75)" : "1.5px solid rgba(125,207,255,0.5)",
-          borderRadius: "50%",
-          top: 0,
-          left: 0,
-          pointerEvents: "none",
-          zIndex: 99998,
-          transform: ringScale,
-          transition: "transform 0.15s ease, border-color 0.15s ease",
-        }}
-      />
+      {/* Punto azzurrino — nascosto se il cursore custom è disabilitato */}
+      {enabled && (
+        <div
+          ref={dotRef}
+          aria-hidden="true"
+          style={{
+            position: "fixed",
+            width: "12px",
+            height: "12px",
+            borderRadius: "50%",
+            background: hovered ? "#a5e8ff" : "#7dcfff",
+            top: 0,
+            left: 0,
+            pointerEvents: "none",
+            zIndex: 99999,
+            transform: dotScale,
+            transition: "transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease",
+            boxShadow: hovered
+              ? "0 0 14px 4px rgba(160,230,255,0.6)"
+              : "0 0 8px 2px rgba(125,207,255,0.45)",
+          }}
+        />
+      )}
     </>
   );
 }

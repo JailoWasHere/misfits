@@ -87,10 +87,10 @@ export default function LoginPage() {
                   Area riservata
                 </span>
                 <h1 className="text-3xl font-black text-white tracking-tight mb-2">
-                  Bentornato, misfit.
+                  Bentornato!
                 </h1>
                 <p className="text-white/50 text-sm">
-                  Accedi per continuare la tua missione.
+                  Accedi al tuo profilo.
                 </p>
               </motion.div>
 

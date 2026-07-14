@@ -100,14 +100,18 @@ export default function SignupPage() {
         <div className="relative z-10 space-y-8">
           <div>
             <h2 className="text-4xl xl:text-5xl font-black text-white leading-tight tracking-tight mb-4">
-              Il mandato inizia{" "}
+              Diventa un{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-indigo-400">
-                adesso.
+                Misfit
               </span>
             </h2>
             <p className="text-white/50 leading-relaxed text-lg max-w-xs">
-              Tutto quello che i tuoi predecessori non ti hanno lasciato. Da oggi è tuo.
+              Sii il miglior rappresentante possibile
             </p>
+            <p className="text-white/50 leading-relaxed text-lg max-w-xs">
+              Il cambiamento parte da te.
+            </p>
+            
           </div>
 
           <ul className="space-y-3">
@@ -204,7 +208,7 @@ export default function SignupPage() {
                 Registrazione gratuita
               </span>
               <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight leading-tight">
-                Entra nel movimento.
+                Nuovo da queste parti?
               </h1>
               <p className="text-white/45 text-sm mt-2">
                 Crea il tuo account in meno di un minuto.

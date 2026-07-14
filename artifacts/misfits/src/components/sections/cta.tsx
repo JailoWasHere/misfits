@@ -32,10 +32,10 @@ export function Cta() {
             <RevealText className="text-white">Il tuo predecessore</RevealText>{" "}
             <br className="hidden md:block" />
             <RevealText delay={0.3} className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-indigo-300">
-              non ti ha lasciato nulla.
+              non ti ha lasciato nulla?
             </RevealText>
             <br />
-            <RevealText delay={0.55} className="text-white">Tu lascia qualcosa.</RevealText>
+            <RevealText delay={0.55} className="text-white">Inizia da qui.</RevealText>
           </h2>
 
           <motion.p

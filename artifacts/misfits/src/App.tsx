@@ -9,6 +9,7 @@ import LoginPage from "@/pages/login";
 import SignupPage from "@/pages/signup";
 import { CustomCursor } from "@/components/custom-cursor";
 import { ScrollProgress } from "@/components/scroll-progress";
+import { CursorProvider } from "@/contexts/cursor-context";
 
 const queryClient = new QueryClient();
 
@@ -28,12 +29,14 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <ScrollProgress />
-        <CustomCursor />
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
+        <CursorProvider>
+          <ScrollProgress />
+          <CustomCursor />
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <Router />
+          </WouterRouter>
+          <Toaster />
+        </CursorProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

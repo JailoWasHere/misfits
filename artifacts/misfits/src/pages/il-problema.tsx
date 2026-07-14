@@ -19,7 +19,7 @@ const coreProblems = [
     bg: "bg-red-500/10 border-red-500/20",
     title: "Zero template, zero guida",
     short: "Scrivi tutto da zero.",
-    body: "Il tuo predecessore se n'è andato senza lasciarti nulla. Ogni richiesta alla presidenza, ogni verbale, ogni comunicato: li devi inventare da capo. Non esiste un archivio, non esiste un modello. Esisti tu, una tastiera e tanta ansia.",
+    body: "Succede sempre: nessuno ti spiega cosa devi fare e come farlo correttamente. Ogni richiesta alla presidenza, ogni verbale, ogni comunicato: li devi inventare da capo. Non esiste un archivio, non esiste un modello. Esisti tu, una tastiera e tanta ansia.",
   },
   {
     icon: BookX,

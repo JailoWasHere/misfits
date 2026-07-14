@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MousePointer2, Mouse } from "lucide-react";
 import logoPath from "@assets/immagine_1779966467564.png";
 import { motion, AnimatePresence } from "framer-motion";
+import { useCursor } from "@/contexts/cursor-context";
 
 const navLinks = [
   { label: "Il Problema", href: "#problem" },
@@ -22,6 +23,7 @@ export function Navbar() {
   }, []);
 
   const isHome = location === "/" || location === "";
+  const { enabled: cursorEnabled, toggle: toggleCursor } = useCursor();
 
   return (
     <header
@@ -54,6 +56,46 @@ export function Navbar() {
 
         {/* Desktop buttons */}
         <div className="hidden md:flex items-center gap-3">
+          {/* Cursor toggle */}
+          <motion.button
+            onClick={toggleCursor}
+            title={cursorEnabled ? "Cursore normale" : "Cursore custom"}
+            whileTap={{ scale: 0.88 }}
+            className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-semibold transition-all duration-300 ${
+              cursorEnabled
+                ? "border-primary/40 bg-primary/10 text-primary hover:bg-primary/20"
+                : "border-white/12 bg-white/5 text-white/45 hover:bg-white/10 hover:text-white/70"
+            }`}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              {cursorEnabled ? (
+                <motion.span
+                  key="custom"
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.6 }}
+                  transition={{ duration: 0.15 }}
+                  className="flex items-center gap-1.5"
+                >
+                  <span className="flex h-2 w-2 rounded-full bg-primary shadow-[0_0_6px_2px_rgba(19,55,244,0.6)]" />
+                  cursore
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="default"
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.6 }}
+                  transition={{ duration: 0.15 }}
+                  className="flex items-center gap-1.5"
+                >
+                  <MousePointer2 className="h-3 w-3" />
+                  cursore
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </motion.button>
+
           <Link
             href="/login"
             className="text-sm font-semibold text-white/70 hover:text-white transition-colors px-4 py-2 rounded-full hover:bg-white/8"

@@ -7,7 +7,7 @@ const problems = [
   {
     icon: FileX,
     title: "Zero template, zero guida",
-    desc: "Il tuo predecessore se ne è andato senza lasciarti nulla. Ogni richiesta alla presidenza la devi scrivere da zero.",
+    desc: "Succede sempre: nessuno ti spiega cosa devi fare e come farlo correttamente. Ogni richiesta alla presidenza, ogni verbale, ogni comunicato: li devi inventare da capo. Non esiste un archivio",
   },
   {
     icon: BookX,
