@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { useCursor } from "@/contexts/cursor-context";
 
 export function CustomCursor() {
+  const { enabled } = useCursor();
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
@@ -9,7 +11,19 @@ export function CustomCursor() {
   const [pressed, setPressed] = useState(false);
   const [hovered, setHovered] = useState(false);
 
+  // Nasconde il cursore di sistema solo quando quello custom è attivo.
   useEffect(() => {
+    const root = document.documentElement;
+    if (enabled) {
+      root.setAttribute("data-custom-cursor", "");
+    } else {
+      root.removeAttribute("data-custom-cursor");
+    }
+    return () => root.removeAttribute("data-custom-cursor");
+  }, [enabled]);
+
+  useEffect(() => {
+    if (!enabled) return;
     const onMove = (e: MouseEvent) => {
       mouse.current = { x: e.clientX, y: e.clientY };
       if (dotRef.current) {
@@ -56,10 +70,12 @@ export function CustomCursor() {
       document.removeEventListener("mouseout", onLeave);
       cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [enabled]);
 
   const dotScale = pressed ? "scale(0.6)" : hovered ? "scale(2.2)" : "scale(1)";
   const ringScale = pressed ? "scale(0.8)" : hovered ? "scale(1.5)" : "scale(1)";
+
+  if (!enabled) return null;
 
   return (
     <>
@@ -115,8 +131,8 @@ export function CustomCursor() {
         }}
       />
 
-      {/* Ring */}
-   /*   <div
+      {/* Ring (disattivato)
+      <div
         ref={ringRef}
         aria-hidden="true"
         style={{
@@ -132,9 +148,8 @@ export function CustomCursor() {
           transform: ringScale,
           transition: "transform 0.15s ease, border-color 0.15s ease",
         }}
-
-        
       />
+      */}
     </>
   );
 }

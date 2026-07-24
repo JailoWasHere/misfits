@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowLeft, Mail, Lock, LogIn } from "lucide-react";
@@ -195,9 +195,11 @@ export default function LoginPage() {
               >
                 <p className="text-white/30 text-xs">
                   Non hai un account?{" "}
-                  <span className="text-primary/70 hover:text-primary cursor-pointer transition-colors">
-                    Registrati gratis
-                  </span>
+                  <Link href="/signup">
+                    <span className="text-primary/70 hover:text-primary cursor-pointer transition-colors">
+                      Registrati gratis
+                    </span>
+                  </Link>
                 </p>
               </motion.div>
             </div>

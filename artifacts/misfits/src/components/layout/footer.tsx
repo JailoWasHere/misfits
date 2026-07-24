@@ -1,4 +1,3 @@
-import { Link } from "wouter";
 import logoPath from "@assets/immagine_1779966467564.png";
 
 export function Footer() {
@@ -16,20 +15,20 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4 text-white">Prodotto</h4>
             <ul className="space-y-3">
-              <li><Link href="#" className="text-white/60 hover:text-primary transition-colors">Template</Link></li>
-              <li><Link href="#" className="text-white/60 hover:text-primary transition-colors">Guide</Link></li>
-              <li><Link href="#" className="text-white/60 hover:text-primary transition-colors">Mentorship</Link></li>
-              <li><Link href="#" className="text-white/60 hover:text-primary transition-colors">Community</Link></li>
+              <li><a href="#" className="text-white/60 hover:text-primary transition-colors">Template</a></li>
+              <li><a href="#" className="text-white/60 hover:text-primary transition-colors">Guide</a></li>
+              <li><a href="#" className="text-white/60 hover:text-primary transition-colors">Mentorship</a></li>
+              <li><a href="#" className="text-white/60 hover:text-primary transition-colors">Community</a></li>
             </ul>
           </div>
           
           <div>
             <h4 className="font-semibold mb-4 text-white">Risorse</h4>
             <ul className="space-y-3">
-              <li><Link href="#" className="text-white/60 hover:text-primary transition-colors">Blog</Link></li>
-              <li><Link href="#" className="text-white/60 hover:text-primary transition-colors">Storie di successo</Link></li>
-              <li><Link href="#" className="text-white/60 hover:text-primary transition-colors">Supporto</Link></li>
-              <li><Link href="#" className="text-white/60 hover:text-primary transition-colors">Contatti</Link></li>
+              <li><a href="#" className="text-white/60 hover:text-primary transition-colors">Blog</a></li>
+              <li><a href="#" className="text-white/60 hover:text-primary transition-colors">Storie di successo</a></li>
+              <li><a href="#" className="text-white/60 hover:text-primary transition-colors">Supporto</a></li>
+              <li><a href="#" className="text-white/60 hover:text-primary transition-colors">Contatti</a></li>
             </ul>
           </div>
         </div>
@@ -39,8 +38,8 @@ export function Footer() {
             © {new Date().getFullYear()} Misfits. Tutti i diritti riservati.
           </p>
           <div className="flex gap-6 text-sm text-white/40">
-            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-white transition-colors">Termini di Servizio</Link>
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Termini di Servizio</a>
           </div>
         </div>
       </div>
