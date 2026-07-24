@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import logoPath from "@assets/immagine_1779966467564.png";
 import { ArrowRight, FileText, Users, Map, Target } from "lucide-react";
@@ -51,20 +52,24 @@ export function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button
-              size="lg"
-              className="w-full sm:w-auto h-14 px-8 text-lg bg-primary hover:bg-primary/90 text-white rounded-full shadow-[0_0_40px_-10px_rgba(19,55,244,0.8)] group transition-all"
-            >
-              Inizia gratis
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="w-full sm:w-auto h-14 px-8 text-lg rounded-full border-white/20 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm"
-            >
-              Scopri di più
-            </Button>
+            <Link href="/signup" className="w-full sm:w-auto">
+              <Button
+                size="lg"
+                className="w-full sm:w-auto h-14 px-8 text-lg bg-primary hover:bg-primary/90 text-white rounded-full shadow-[0_0_40px_-10px_rgba(19,55,244,0.8)] group transition-all"
+              >
+                Inizia gratis
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+            <Link href="/la-nostra-missione" className="w-full sm:w-auto">
+              <Button
+                size="lg"
+                variant="outline"
+                className="w-full sm:w-auto h-14 px-8 text-lg rounded-full border-white/20 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm"
+              >
+                Scopri di più
+              </Button>
+            </Link>
           </div>
         </motion.div>
 

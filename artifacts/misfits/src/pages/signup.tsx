@@ -1,10 +1,20 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "wouter";
-import { ArrowLeft, Mail, Lock, User, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Link, useLocation } from "wouter";
+import {
+  ArrowLeft,
+  Mail,
+  Lock,
+  User,
+  ArrowRight,
+  CheckCircle2,
+  AlertCircle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRegister } from "@workspace/api-client-react";
+import { useAuth } from "@/contexts/auth-context";
 import logoPath from "@assets/immagine_1779966467564.png";
 
 const perks = [
@@ -42,9 +52,39 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [focused, setFocused] = useState<"name" | "email" | "password" | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [alreadyRegistered, setAlreadyRegistered] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [, navigate] = useLocation();
+  const { login } = useAuth();
+  const registerMutation = useRegister();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setAlreadyRegistered(false);
+    try {
+      const user = await registerMutation.mutateAsync({
+        data: { name, email, password },
+      });
+      login(user);
+      navigate("/scarica");
+    } catch (err) {
+      const status = (err as { status?: number }).status;
+      const message = (err as { data?: { message?: string } }).data?.message;
+      if (status === 409) {
+        setAlreadyRegistered(true);
+        setError(
+          message ?? "Sei già registrato con questa mail, clicca su accedi",
+        );
+      } else if (status === 400) {
+        setError(
+          message ?? "Controlla i dati: la password deve avere almeno 8 caratteri.",
+        );
+      } else {
+        setError("Qualcosa è andato storto. Riprova tra poco.");
+      }
+    }
   };
 
   const containerVariants = {
@@ -235,6 +275,32 @@ export default function SignupPage() {
               <div className="flex-1 h-px bg-white/8" />
             </motion.div>
 
+            {/* Error message */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-4 flex items-start gap-2.5 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3"
+                role="alert"
+                data-testid="signup-error"
+              >
+                <AlertCircle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-red-300 leading-relaxed">
+                  {error}
+                  {alreadyRegistered && (
+                    <>
+                      {" "}
+                      <Link href="/login">
+                        <span className="font-semibold text-red-200 underline underline-offset-2 hover:text-white cursor-pointer">
+                          Accedi
+                        </span>
+                      </Link>
+                    </>
+                  )}
+                </p>
+              </motion.div>
+            )}
+
             {/* Form fields */}
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Name */}
@@ -323,10 +389,13 @@ export default function SignupPage() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full h-12 rounded-xl text-base font-semibold bg-primary hover:bg-primary/90 text-white shadow-[0_0_30px_-8px_rgba(19,55,244,0.7)] hover:shadow-[0_0_50px_-8px_rgba(19,55,244,0.9)] transition-all group"
+                  disabled={registerMutation.isPending}
+                  className="w-full h-12 rounded-xl text-base font-semibold bg-primary hover:bg-primary/90 text-white shadow-[0_0_30px_-8px_rgba(19,55,244,0.7)] hover:shadow-[0_0_50px_-8px_rgba(19,55,244,0.9)] transition-all group disabled:opacity-60"
                   data-testid="signup-submit"
                 >
-                  Crea account gratuito
+                  {registerMutation.isPending
+                    ? "Creazione account…"
+                    : "Crea account gratuito"}
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
                 </Button>
               </motion.div>

@@ -5,9 +5,6 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-export interface HealthStatus {
-  status: string;
-}
 
 export interface RegisterRequest {
   /**
@@ -23,20 +20,3 @@ export interface RegisterRequest {
      */
   password: string;
 }
-
-export interface LoginRequest {
-  email: string;
-  /** @minLength 1 */
-  password: string;
-}
-
-export interface AuthUser {
-  id: string;
-  email: string;
-  name: string;
-}
-
-export interface ErrorResponse {
-  message: string;
-}
-

@@ -1,20 +1,35 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "wouter";
-import { ArrowLeft, Mail, Lock, LogIn } from "lucide-react";
+import { Link, useLocation } from "wouter";
+import { ArrowLeft, Mail, Lock, LogIn, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLogin } from "@workspace/api-client-react";
+import { useAuth } from "@/contexts/auth-context";
 import logoPath from "@assets/immagine_1779966467564.png";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [focused, setFocused] = useState<"email" | "password" | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [, navigate] = useLocation();
+  const { login } = useAuth();
+  const loginMutation = useLogin();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Auth logic out of scope — placeholder
+    setError(null);
+    try {
+      const user = await loginMutation.mutateAsync({ data: { email, password } });
+      login(user);
+      navigate("/");
+    } catch (err) {
+      const message = (err as { data?: { message?: string } }).data?.message;
+      setError(message ?? "Email o password non corretti.");
+    }
   };
 
   return (
@@ -93,6 +108,20 @@ export default function LoginPage() {
                   Accedi al tuo profilo.
                 </p>
               </motion.div>
+
+              {/* Error message */}
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-5 flex items-start gap-2.5 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3"
+                  role="alert"
+                  data-testid="login-error"
+                >
+                  <AlertCircle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-red-300 leading-relaxed">{error}</p>
+                </motion.div>
+              )}
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -177,10 +206,11 @@ export default function LoginPage() {
                   <Button
                     type="submit"
                     size="lg"
-                    className="w-full h-12 rounded-xl text-base font-semibold bg-primary hover:bg-primary/90 text-white shadow-[0_0_30px_-8px_rgba(19,55,244,0.7)] hover:shadow-[0_0_40px_-8px_rgba(19,55,244,0.9)] transition-all group"
+                    disabled={loginMutation.isPending}
+                    className="w-full h-12 rounded-xl text-base font-semibold bg-primary hover:bg-primary/90 text-white shadow-[0_0_30px_-8px_rgba(19,55,244,0.7)] hover:shadow-[0_0_40px_-8px_rgba(19,55,244,0.9)] transition-all group disabled:opacity-60"
                     data-testid="login-submit"
                   >
-                    Accedi
+                    {loginMutation.isPending ? "Accesso…" : "Accedi"}
                     <LogIn className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
                   </Button>
                 </motion.div>
