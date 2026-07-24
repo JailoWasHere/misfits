@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { useLocation } from "wouter";
 import { Check, Shield, Users, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/auth-context";
 
 const plans = [
   {
@@ -115,6 +117,8 @@ function PricingCard({
   isInView: boolean;
 }) {
   const Icon = plan.icon;
+  const { isAuthenticated } = useAuth();
+  const [, navigate] = useLocation();
 
   if (plan.comingSoon) {
     return (
@@ -195,6 +199,7 @@ function PricingCard({
 
       {/* CTA */}
       <Button
+        onClick={() => navigate(isAuthenticated ? "/scarica" : "/signup")}
         className="w-full rounded-xl h-11 font-semibold bg-transparent border border-white/15 text-white hover:bg-white/8 transition-all"
         data-testid={`pricing-cta-${plan.id}`}
       >

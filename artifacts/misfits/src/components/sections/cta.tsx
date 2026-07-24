@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { Link } from "wouter";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RevealText } from "@/components/reveal-text";
@@ -54,14 +55,16 @@ export function Cta() {
             transition={{ delay: 0.65, duration: 0.6 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Button
-              size="lg"
-              className="h-14 px-10 text-lg bg-primary hover:bg-primary/90 text-white rounded-full shadow-[0_0_60px_-10px_rgba(19,55,244,0.8)] group transition-all hover:shadow-[0_0_80px_-10px_rgba(19,55,244,0.9)]"
-              data-testid="cta-primary-button"
-            >
-              Inizia gratis
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            <Link href="/signup">
+              <Button
+                size="lg"
+                className="h-14 px-10 text-lg bg-primary hover:bg-primary/90 text-white rounded-full shadow-[0_0_60px_-10px_rgba(19,55,244,0.8)] group transition-all hover:shadow-[0_0_80px_-10px_rgba(19,55,244,0.9)]"
+                data-testid="cta-primary-button"
+              >
+                Inizia gratis
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
             <p className="text-white/40 text-sm">Nessuna carta di credito. Nessun obbligo.</p>
           </motion.div>
         </div>
