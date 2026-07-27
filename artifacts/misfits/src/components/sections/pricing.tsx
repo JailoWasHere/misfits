@@ -93,7 +93,7 @@ export function Pricing() {
             </span>
           </h2>
           <p className="text-xl text-white/60 leading-relaxed">
-            Pagato da voi, per voi. Zero burocrazia con la scuola.
+            Ti seguiamo dall'inizio alla fine del tuo mandato.
           </p>
         </motion.div>
 
