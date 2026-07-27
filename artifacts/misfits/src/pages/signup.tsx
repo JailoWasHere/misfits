@@ -9,6 +9,7 @@ import {
   ArrowRight,
   CheckCircle2,
   AlertCircle,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -169,20 +170,18 @@ export default function SignupPage() {
             ))}
           </ul>
 
-          {/* Floating stat pill */}
+          {/* Reassurance pill */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.85, duration: 0.5 }}
             className="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm px-4 py-3"
           >
-            <div className="flex -space-x-2">
-              {["bg-blue-500", "bg-indigo-500", "bg-violet-500", "bg-purple-500"].map((c, i) => (
-                <div key={i} className={`h-7 w-7 rounded-full ${c} border-2 border-background`} />
-              ))}
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/15 flex-shrink-0">
+              <Sparkles className="h-4 w-4 text-primary" />
             </div>
             <p className="text-sm text-white/60">
-              <span className="font-bold text-white">12.000+</span> rappresentanti attivi
+              <span className="font-bold text-white">Non serve esperienza.</span> Il resto lo impari con noi.
             </p>
           </motion.div>
         </div>

@@ -67,7 +67,7 @@ export function Hero() {
                 variant="outline"
                 className="w-full sm:w-auto h-14 px-8 text-lg rounded-full border-white/20 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm"
               >
-                Scopri di più
+                Indeciso se candidarti?
               </Button>
             </Link>
           </div>
